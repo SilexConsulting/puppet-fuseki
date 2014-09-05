@@ -1,4 +1,4 @@
-name          'puppet-solr'
+name          'puppet-fuseki'
 version       '0.0.1'
 source        'UNKNOWN'
 author        'Silex Consulting'

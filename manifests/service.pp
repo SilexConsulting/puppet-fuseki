@@ -1,9 +1,15 @@
-# == Class solr::service
+# == Class fuseki::service
 #
-# This class is meant to be called from solr
-# It ensures that the service is running
-#
-class solr::service {
-  include solr::params
+# Ensure that the fuseki service is running
+class fuseki::service {
+  include fuseki::params
 
+  $service_name   = $::fuseki::params::service_name
+
+  service { $service_name:
+    ensure     => running,
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => false,
+  }
 }
