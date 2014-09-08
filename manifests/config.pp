@@ -52,12 +52,14 @@ class fuseki::config {
     owner     => 'root',
     group     => 'root',
     source    => 'puppet:///modules/fuseki/fuseki',
-  } ->
+  }
+
   file { '/etc/default/fuseki':
     ensure    => 'file',
     owner     => 'root',
     group     => 'root',
     content   => template('fuseki/fuseki.erb'),
+    require   => File['/etc/init.d/fuseki'], # after installation
   }
 
   # Create the fuseki logs directory at /var/log/fuseki
@@ -66,7 +68,7 @@ class fuseki::config {
     owner     => $user,
     group     => $group,
     mode      => '0755',
-    require   => File["${home}/fuseki"], # after installation
+    require   => File['/etc/init.d/fuseki'], # after installation
   } ->
   file { '/var/log/fuseki':
     ensure    => 'link',
@@ -79,6 +81,6 @@ class fuseki::config {
     owner     => $user,
     group     => $group,
     mode      => '0755',
-    require   => File["${home}/fuseki"], # after installation
+    require   => File['/etc/init.d/fuseki'], # after installation
   }
 }
