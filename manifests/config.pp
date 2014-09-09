@@ -1,7 +1,7 @@
 # == Class: fuseki::config
 # Download, install and configure fuseki
 class fuseki::config {
-  $file_name     = "jena-fuseki-${::fuseki::fuseki_version}-distribution.tar.gz"
+  $file_name     = "jena-fuseki-${fuseki::fuseki_version}-distribution.tar.gz"
   $download_site = 'http://archive.apache.org/dist/jena/binaries' # no trailing /
 
   # create fuseki user and group
