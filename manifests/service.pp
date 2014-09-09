@@ -6,6 +6,6 @@ class fuseki::service {
     ensure     => running,
     enable     => true,
     hasstatus  => true,
-    hasrestart => false,
+    hasrestart => true,
   }
 }
