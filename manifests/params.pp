@@ -1,22 +1,25 @@
-# == Class solr::params
+# == Class fuseki::params
 #
-# This class is meant to be called from solr
-# It sets variables according to platform
+# === Parameters
 #
-class solr::params {
+# [*source_dir*]
+#   If defined, the whole fuseki configuration directory content is retrieved recursively from
+#   the specified source (parameter: source => $source_dir , recurse => true)
+#
+# [*source_dir_purge*]
+#   If set to true all the existing configuration directory is overriden by the
+#   content retrived from source_dir. (source => $source_dir , recurse => true , purge => true)
+#
+class fuseki::params {
   case $::osfamily {
     'Debian': {
-      $tomcat_home                        = '/usr/share/tomcat7'
-      $tomcat_basedir                     = '/var/lib/tomcat7'
-      $tomcat_user                        = 'tomcat7'
-      $tomcat_group                       = 'tomcat7'
-
-      $solr_home                          = '/usr/share/solr'
-      $solr_conf_dir                      = '/etc/solr'
-      $solr_version                       = '4.6.0'
-      $service_name                       = 'tomcat7'
-
-      $config                             = 'puppet:///modules/solr/'
+      $fuseki_home     = '/usr/share/fuseki'
+      $fuseki_user     = 'fuseki'
+      $fuseki_group    = 'fuseki'
+      $fuseki_logs     = '/var/log/fuseki'
+      $fuseki_settings = '/etc/default/fuseki'
+      $service_name    = 'fuseki'
+      $config          = 'puppet:///modules/fuseki/'
     }
     default: {
       fail("${::operatingsystem} not supported")

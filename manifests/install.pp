@@ -1,7 +1,8 @@
-# == Class solr::install
-#
-class solr::install {
-  include solr::params
+# == Class fuseki::install
+# Pre-conditions that must be met before Fuseki can be installed
+
+class fuseki::install {
+  include fuseki::params
 
   package { 'default-jdk':
     ensure  => present,
@@ -10,9 +11,4 @@ class solr::install {
   package { 'wget':
     ensure  => present,
   }
-
-  package { 'curl':
-    ensure  => present,
-  }
-
 }
