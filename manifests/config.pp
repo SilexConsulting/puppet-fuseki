@@ -3,48 +3,48 @@
 class fuseki::config {
   include fuseki::params
 
-  $version                  = $::fuseki::params::version
+  $fuseki_version = $::fuseki::fuseki_version
 
-  $home                     = $::fuseki::params::home
-  $logs                     = $::fuseki::params::logs
+  $fuseki_home     = $::fuseki::params::fuseki_home
+  $fuseki_user     = $::fuseki::params::fuseki_user
+  $fuseki_group    = $::fuseki::params::fuseki_group
+  $fuseki_logs     = $::fuseki::params::fuseki_logs
+  $fuseki_settings = $::fuseki::params::fuseki_settings
 
-  $user                     = $::fuseki::params::user
-  $group                    = $::fuseki::params::group
-
-  $file_name                = "jena-fuseki-${version}-distribution.tar.gz"
+  $file_name                = "jena-fuseki-${fuseki_version}-distribution.tar.gz"
   $download_site            = 'http://archive.apache.org/dist/jena/binaries' # no trailing /
 
   # create fuseki user
-  group { $group:
+  group { $fuseki_group:
     ensure => present,
   } ->
-  user { $user:
+  user { $fuseki_user:
     ensure => present,
-    gid    => $group,
+    gid    => $fuseki_group,
   }
 
-  # Create the fuseki directory at $home
-  file { $home:
+  # Create the fuseki directory at $fuseki_home
+  file { $fuseki_home:
     ensure    => directory,
-    owner     => $user,
-    group     => $group,
+    owner     => $fuseki_user,
+    group     => $fuseki_group,
     mode      => '0755',
-    require   => User[$user],
+    require   => User[$fuseki_user],
   } ->
-  # download and extract fuseki application to $home
+  # download and extract fuseki application to $fuseki_home
   exec { 'fuseki-download':
     command   => "wget ${download_site}/${file_name}",
     cwd       => '/tmp',
     creates   => "/tmp/${file_name}",
-    onlyif    => "test ! -d ${home}/WEB-INF && test ! -f /tmp/${file_name}",
+    onlyif    => "test ! -d ${fuseki_home}/WEB-INF && test ! -f /tmp/${file_name}",
     timeout   => 0,
   } ->
   exec { 'fuseki-extract':
     path      => ['/usr/bin', '/usr/sbin', '/bin'],
-    command   => "tar xzvf ${file_name} --strip-components=1 -C ${home}",
+    command   => "tar xzvf ${file_name} --strip-components=1 -C ${fuseki_home}",
     cwd       => "/tmp",
-    onlyif    => "test -f /tmp/${file_name} && test ! -d ${home}/fuseki-server",
-    user      => $user,
+    onlyif    => "test -f /tmp/${file_name} && test ! -d ${fuseki_home}/fuseki-server",
+    user      => $fuseki_user,
   } ->
   # use a modified version of the startup script, which plays nicely with puppet
   file { '/etc/init.d/fuseki':
@@ -63,23 +63,23 @@ class fuseki::config {
   }
 
   # Create the fuseki logs directory at /var/log/fuseki
-  file { "${home}/logs":
+  file { "${fuseki_home}/logs":
     ensure    => directory,
-    owner     => $user,
-    group     => $group,
+    owner     => $fuseki_user,
+    group     => $fuseki_group,
     mode      => '0755',
     require   => File['/etc/init.d/fuseki'], # after installation
   } ->
-  file { '/var/log/fuseki':
+  file { $fuseki_logs:
     ensure    => 'link',
-    target    => "${home}/logs",
+    target    => "${fuseki_home}/logs",
   }
 
-  # Create the fuseki DB directory at $home/DB
-  file { "${home}/DB":
+  # Create the fuseki DB directory at $fuseki_home/DB
+  file { "${fuseki_home}/DB":
     ensure    => directory,
-    owner     => $user,
-    group     => $group,
+    owner     => $fuseki_user,
+    group     => $fuseki_group,
     mode      => '0755',
     require   => File['/etc/init.d/fuseki'], # after installation
   }

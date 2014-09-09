@@ -4,7 +4,7 @@
 class fuseki::service {
   include fuseki::params
 
-  $service_name   = $::fuseki::params::service_name
+  $service_name = $::fuseki::params::service_name
 
   service { $service_name:
     ensure     => running,

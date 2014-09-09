@@ -13,15 +13,13 @@
 class fuseki::params {
   case $::osfamily {
     'Debian': {
-      $home                               = '/usr/share/fuseki'
-      $logs                               = '/var/log/fuseki'
-      $version                            = '1.0.2'
-      $user                               = 'fuseki'
-      $group                              = 'fuseki'
-
-      $service_name                       = 'fuseki'
-
-      $config                             = 'puppet:///modules/fuseki/'
+      $fuseki_home     = '/usr/share/fuseki'
+      $fuseki_user     = 'fuseki'
+      $fuseki_group    = 'fuseki'
+      $fuseki_logs     = '/var/log/fuseki'
+      $fuseki_settings = '/etc/default/fuseki'
+      $service_name    = 'fuseki'
+      $config          = 'puppet:///modules/fuseki/'
     }
     default: {
       fail("${::operatingsystem} not supported")
