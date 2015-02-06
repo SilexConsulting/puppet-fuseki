@@ -14,6 +14,8 @@ class fuseki::params {
 
   $service_name     = 'fuseki'
   $config           = 'puppet:///modules/fuseki/'
+  $fuseki_args      = ''
+  $fuseki_java_options = ''
 
   case $::osfamily {
     'Debian': {

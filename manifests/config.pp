@@ -1,6 +1,20 @@
 # == Class: fuseki::config
 # Download, install and configure fuseki
-class fuseki::config {
+class fuseki::config (
+  $fuseki_version   = $fuseki::params::fuseki_version,
+  $fuseki_user      = $fuseki::params::fuseki_user,
+  $fuseki_group     = $fuseki::params::fuseki_group,
+  $fuseki_settings  = $fuseki::params::fuseki_settings,
+  $fuseki_home      = $fuseki::params::fuseki_home,
+  $fuseki_logs      = $fuseki::params::fuseki_logs,
+  $fuseki_lib       = $fuseki::params::fuseki_lib,
+  $fuseki_backups   = $fuseki::params::fuseki_backups,
+  $fuseki_databases = $fuseki::params::fuseki_databases,
+  $service_name     = $fuseki::params::service_name,
+  $config           = $fuseki::params::config,
+  $fuseki_args      = $fuseki::params::fuseki_args,
+  $fuseki_java_options = $fuseki::params::fuseki_java_options
+) inherits fuseki::params {
   $file_name     = "jena-fuseki-${fuseki::fuseki_version}-distribution.tar.gz"
   $download_site = 'http://archive.apache.org/dist/jena/binaries' # no trailing /
 
