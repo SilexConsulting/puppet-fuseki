@@ -1,7 +1,7 @@
 # == Class: fuseki
 #
 class fuseki (
-  $fuseki_version = $fuseki::params::fuseki_version
+  $fuseki_version = $fuseki::params::fuseki_version,
   $fuseki_data_dir  = $fuseki::params::fuseki_data_dir,
 ) inherits fuseki::params {
   class {'fuseki::install': } ->
