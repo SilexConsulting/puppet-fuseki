@@ -6,6 +6,7 @@ class fuseki::params {
   $fuseki_group     = 'fuseki'
   $fuseki_settings  = '/etc/default/fuseki'
 
+  $fuseki_data_dir  = '/usr/shar/fuseki/DB'
   $fuseki_home      = '/usr/share/fuseki'
   $fuseki_logs      = "${fuseki_home}/logs"
   $fuseki_lib       = '/var/lib/fuseki'

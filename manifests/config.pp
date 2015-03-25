@@ -5,6 +5,7 @@ class fuseki::config (
   $fuseki_user      = $fuseki::params::fuseki_user,
   $fuseki_group     = $fuseki::params::fuseki_group,
   $fuseki_settings  = $fuseki::params::fuseki_settings,
+  $fuseki_data_dir  = $fuseki::params::fuseki_data_dir,
   $fuseki_home      = $fuseki::params::fuseki_home,
   $fuseki_logs      = $fuseki::params::fuseki_logs,
   $fuseki_lib       = $fuseki::params::fuseki_lib,
@@ -82,7 +83,7 @@ class fuseki::config (
     ensure    => 'file',
     owner     => 'root',
     group     => 'root',
-    source    => 'puppet:///modules/fuseki/fuseki',
+
   }
 
   # Add FUSEKI_HOME environemnt variable
